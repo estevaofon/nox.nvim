@@ -94,35 +94,6 @@ nox.nvim/
 └── README.md
 ```
 
-## Example
-
-```nox
-// HashMap example in Nox
-struct Entry
-    key: string,
-    value: int,
-    next: ref Entry
-end
-
-let CAPACITY: int = 16
-
-func hash_str(s: string) -> int
-    let h: int = 5381
-    let i: int = 0
-    while i < strlen(s) do
-        let c: int = ord(s[i])
-        h = h * 33 + c
-        i = i + 1
-    end
-    if h < 0 then
-        h = 0 - h
-    end
-    return h % CAPACITY
-end
-
-print("Hello, Nox!")
-```
-
 ## License
 
 MIT
