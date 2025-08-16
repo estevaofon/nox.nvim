@@ -1,14 +1,13 @@
 # nox.nvim
 
-A Neovim plugin for Nox language support with advanced syntax highlighting.
+A simple and efficient syntax highlighting plugin for the Nox programming language in Neovim.
 
 ## Features
 
-- 🎨 Advanced syntax highlighting
-- 📝 Automatic file type detection for `.nx` files  
-- ⚡ Real-time highlighting updates
-- 🔧 Customizable highlight groups
-- 📦 Zero dependencies
+- 🎨 Syntax highlighting for Nox language constructs
+- 🚀 Automatic filetype detection for `.nx` files
+- ⚡ Fast and lightweight
+- 🔧 Zero configuration required
 
 ## Installation
 
@@ -16,13 +15,8 @@ A Neovim plugin for Nox language support with advanced syntax highlighting.
 
 ```lua
 {
-  "yourusername/nox.nvim",
-  ft = "nox",
-  config = function()
-    require("nox").setup({
-      -- your configuration
-    })
-  end,
+  "estevaofon/nox.nvim",
+  ft = "nox",  -- Lazy load on Nox files
 }
 ```
 
@@ -30,46 +24,106 @@ A Neovim plugin for Nox language support with advanced syntax highlighting.
 
 ```lua
 use {
-  'yourusername/nox.nvim',
-  ft = {'nox'},
-  config = function()
-    require('nox').setup({})
-  end
+  "estevaofon/nox.nvim",
+  ft = {"nox"},
 }
 ```
 
-## Configuration
+### Using [vim-plug](https://github.com/junegunn/vim-plug)
+
+```vim
+Plug 'estevaofon/nox.nvim'
+```
+
+## Usage
+
+The plugin works automatically for any file with the `.nx` extension. No configuration needed!
+
+### Commands
+
+- `:NoxHighlight` - Force refresh syntax highlighting for current buffer
+- `:NoxRefresh` - Refresh highlighting for all open Nox buffers
+
+### Manual Setup (Optional)
+
+If you want to customize the setup:
 
 ```lua
-require('nox').setup({
-  -- Enable debug mode
-  debug = false,
-  
-  -- Custom highlight groups
-  highlights = {
-    NoxKeyword = { fg = "#ff0080", bold = true },
-    NoxType = { fg = "#64c8ff" },
-    NoxString = { fg = "#00ffff" },
-    -- ... more custom highlights
-  },
-  
-  -- Enable specific features
-  features = {
-    auto_highlight = true,
-    indent_guides = false,
-    completion = false,
-  }
+require("nox").setup({
+  -- Currently no options, but reserved for future use
 })
 ```
 
-## Commands
+## Supported Syntax
 
-- `:NoxHighlight` - Force syntax highlighting on current buffer
-- `:NoxRefresh` - Refresh highlighting for all Nox buffers
-- `:NoxDebug` - Toggle debug mode
-- `:NoxStatus` - Show status information
-- `:NoxTest` - Create a test buffer with sample Nox code
+### Keywords
+`struct`, `end`, `let`, `func`, `return`, `if`, `then`, `else`, `while`, `do`, `for`, `in`, `ref`, `void`
+
+### Types
+`int`, `string`, `bool`, `void`
+
+### Built-in Functions
+`print`, `strlen`, `ord`, `to_str`
+
+### Literals
+- Strings: `"..."` or `'...'`
+- Numbers: `123`, `-456`, `3.14`
+- Booleans: `true`, `false`
+- Null: `null`
+
+### Comments
+Single-line comments: `// comment`
+
+## File Structure
+
+```
+nox.nvim/
+├── lua/
+│   └── nox/
+│       ├── init.lua       # Main plugin logic
+│       └── highlights.lua # Color definitions
+├── plugin/
+│   └── nox.lua           # Auto-loading
+├── ftdetect/
+│   └── nox.lua           # File type detection
+├── ftplugin/
+│   └── nox.lua           # File type settings
+└── README.md
+```
+
+## Example
+
+```nox
+// HashMap example in Nox
+struct Entry
+    key: string,
+    value: int,
+    next: ref Entry
+end
+
+let CAPACITY: int = 16
+
+func hash_str(s: string) -> int
+    let h: int = 5381
+    let i: int = 0
+    while i < strlen(s) do
+        let c: int = ord(s[i])
+        h = h * 33 + c
+        i = i + 1
+    end
+    if h < 0 then
+        h = 0 - h
+    end
+    return h % CAPACITY
+end
+
+print("Hello, Nox!")
+```
 
 ## License
 
 MIT
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.

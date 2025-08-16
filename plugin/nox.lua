@@ -1,15 +1,8 @@
--- plugin/nox.lua - Global plugin initialization
-
--- Prevent double loading
+-- plugin/nox.lua - Auto-loading setup for nox.nvim
 if vim.g.loaded_nox then
-  return
+	return
 end
-vim.g.loaded_nox = true
+vim.g.loaded_nox = 1
 
--- Defer setup to ensure all modules are loaded
-vim.defer_fn(function()
-  -- Auto-setup with defaults if user hasn't called setup
-  if not vim.g.nox_setup_complete then
-    require("nox").setup({})
-  end
-end, 0)
+-- Setup the plugin automatically
+require("nox").setup()
