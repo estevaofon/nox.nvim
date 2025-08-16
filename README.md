@@ -2,6 +2,9 @@
 
 A simple and efficient syntax highlighting plugin for the Nox programming language in Neovim.
 
+<img height="300" alt="image" src="https://github.com/user-attachments/assets/88ecc84c-0d52-4f99-8445-ea3c43537734" />
+
+
 ## Features
 
 - 🎨 Syntax highlighting for Nox language constructs
