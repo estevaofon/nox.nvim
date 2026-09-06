@@ -1,8 +1,8 @@
--- nox.nvim - Syntax highlighting for Nox language
+-- noxy.nvim - Syntax highlighting for Noxy language
 local M = {}
 
 -- Namespace for highlights
-local ns_id = vim.api.nvim_create_namespace("nox_highlight")
+local ns_id = vim.api.nvim_create_namespace("noxy_highlight")
 
 -- Keywords and types
 local keywords = {
@@ -47,22 +47,22 @@ local nulls = {
 
 -- Pattern definitions
 local patterns = {
-	{ pattern = "//.*$", hl = "NoxComment" },
-	{ pattern = '"[^"]*"', hl = "NoxString" },
-	{ pattern = "'[^']*'", hl = "NoxString" },
-	{ pattern = "%-?%d+%.?%d*", hl = "NoxNumber" },
-	{ pattern = "==", hl = "NoxOperator" },
-	{ pattern = "!=", hl = "NoxOperator" },
-	{ pattern = "<=", hl = "NoxOperator" },
-	{ pattern = ">=", hl = "NoxOperator" },
-	{ pattern = "%->", hl = "NoxOperator" },
-	{ pattern = "%.%.", hl = "NoxOperator" },
-	{ pattern = "[%+%-%*/%%=<>!]", hl = "NoxOperator" },
-	{ pattern = "[%(%)]", hl = "NoxDelimiter" },
-	{ pattern = "[%[%]]", hl = "NoxDelimiter" },
-	{ pattern = "[{}]", hl = "NoxDelimiter" },
-	{ pattern = "[,;:]", hl = "NoxDelimiter" },
-	{ pattern = "%.", hl = "NoxDelimiter" },
+	{ pattern = "//.*$", hl = "NoxyComment" },
+	{ pattern = '"[^"]*"', hl = "NoxyString" },
+	{ pattern = "'[^']*'", hl = "NoxyString" },
+	{ pattern = "%-?%d+%.?%d*", hl = "NoxyNumber" },
+	{ pattern = "==", hl = "NoxyOperator" },
+	{ pattern = "!=", hl = "NoxyOperator" },
+	{ pattern = "<=", hl = "NoxyOperator" },
+	{ pattern = ">=", hl = "NoxyOperator" },
+	{ pattern = "%->", hl = "NoxyOperator" },
+	{ pattern = "%.%.", hl = "NoxyOperator" },
+	{ pattern = "[%+%-%*/%%=<>!]", hl = "NoxyOperator" },
+	{ pattern = "[%(%)]", hl = "NoxyDelimiter" },
+	{ pattern = "[%[%]]", hl = "NoxyDelimiter" },
+	{ pattern = "[{}]", hl = "NoxyDelimiter" },
+	{ pattern = "[,;:]", hl = "NoxyDelimiter" },
+	{ pattern = "%.", hl = "NoxyDelimiter" },
 	{ pattern = "[%a_][%w_]*", hl = "word" },
 }
 
@@ -85,27 +85,27 @@ local function highlight_line(bufnr, line_num, line_content)
 
 				if p.hl == "word" then
 					if keywords[matched_text] then
-						hl_group = "NoxKeyword"
+						hl_group = "NoxyKeyword"
 					elseif types[matched_text] then
-						hl_group = "NoxType"
+						hl_group = "NoxyType"
 					elseif builtins[matched_text] then
-						hl_group = "NoxBuiltin"
+						hl_group = "NoxyBuiltin"
 					elseif booleans[matched_text] then
-						hl_group = "NoxBoolean"
+						hl_group = "NoxyBoolean"
 					elseif nulls[matched_text] then
-						hl_group = "NoxNull"
+						hl_group = "NoxyNull"
 					else
 						local next_char = string.sub(remaining, end_pos + 1, end_pos + 1)
 						local has_space = string.match(string.sub(remaining, end_pos + 1), "^%s*%(")
 						if next_char == "(" or has_space then
-							hl_group = "NoxFunction"
+							hl_group = "NoxyFunction"
 						else
-							hl_group = "NoxIdentifier"
+							hl_group = "NoxyIdentifier"
 						end
 					end
 				end
 
-				if hl_group ~= "NoxIdentifier" then
+				if hl_group ~= "NoxyIdentifier" then
 					vim.api.nvim_buf_add_highlight(bufnr, ns_id, hl_group, line_num, col, col + #matched_text)
 				end
 
@@ -137,7 +137,7 @@ end
 function M.attach(bufnr)
 	bufnr = bufnr or vim.api.nvim_get_current_buf()
 
-	local group_name = "NoxHighlight_" .. bufnr
+	local group_name = "NoxyHighlight_" .. bufnr
 	local success, autocmds = pcall(vim.api.nvim_get_autocmds, { group = group_name, buffer = bufnr })
 	if success and autocmds and #autocmds > 0 then
 		return
@@ -161,29 +161,29 @@ function M.setup(opts)
 	opts = opts or {}
 
 	-- Load highlights
-	require("nox.highlights").setup()
+	require("noxy.highlights").setup()
 
 	-- User commands
-	vim.api.nvim_create_user_command("NoxHighlight", function()
+	vim.api.nvim_create_user_command("NoxyHighlight", function()
 		M.highlight_buffer()
-	end, { desc = "Force Nox syntax highlighting" })
+	end, { desc = "Force Noxy syntax highlighting" })
 
-	vim.api.nvim_create_user_command("NoxRefresh", function()
+	vim.api.nvim_create_user_command("NoxyRefresh", function()
 		local count = 0
 		for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 			if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
 				local filename = vim.api.nvim_buf_get_name(buf)
-				local is_nox = filename:match("%.nx$") or vim.bo[buf].filetype == "nox"
+				local is_noxy = filename:match("%.nx$") or vim.bo[buf].filetype == "noxy"
 
-				if is_nox then
-					vim.bo[buf].filetype = "nox"
+				if is_noxy then
+					vim.bo[buf].filetype = "noxy"
 					M.attach(buf)
 					count = count + 1
 				end
 			end
 		end
-		print("Nox highlighting applied to " .. count .. " buffer(s)")
-	end, { desc = "Refresh Nox highlighting for all .nx buffers" })
+		print("Noxy highlighting applied to " .. count .. " buffer(s)")
+	end, { desc = "Refresh Noxy highlighting for all .nx buffers" })
 end
 
 return M

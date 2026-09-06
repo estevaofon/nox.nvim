@@ -1,13 +1,13 @@
-# nox.nvim
+# noxy.nvim
 
-A simple and efficient syntax highlighting plugin for the Nox programming language in Neovim.
+A simple and efficient syntax highlighting plugin for the Noxy programming language in Neovim.
 
 <img height="300" alt="image" src="https://github.com/user-attachments/assets/88ecc84c-0d52-4f99-8445-ea3c43537734" />
 
 
 ## Features
 
-- 🎨 Syntax highlighting for Nox language constructs
+- 🎨 Syntax highlighting for Noxy language constructs
 - 🚀 Automatic filetype detection for `.nx` files
 - ⚡ Fast and lightweight
 - 🔧 Zero configuration required
@@ -18,8 +18,8 @@ A simple and efficient syntax highlighting plugin for the Nox programming langua
 
 ```lua
 {
-  "estevaofon/nox.nvim",
-  ft = "nox",  -- Lazy load on Nox files
+  "estevaofon/noxy.nvim",
+  ft = "noxy",  -- Lazy load on Noxy files
 }
 ```
 
@@ -27,15 +27,15 @@ A simple and efficient syntax highlighting plugin for the Nox programming langua
 
 ```lua
 use {
-  "estevaofon/nox.nvim",
-  ft = {"nox"},
+  "estevaofon/noxy.nvim",
+  ft = {"noxy"},
 }
 ```
 
 ### Using [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
-Plug 'estevaofon/nox.nvim'
+Plug 'estevaofon/noxy.nvim'
 ```
 
 ## Usage
@@ -44,15 +44,15 @@ The plugin works automatically for any file with the `.nx` extension. No configu
 
 ### Commands
 
-- `:NoxHighlight` - Force refresh syntax highlighting for current buffer
-- `:NoxRefresh` - Refresh highlighting for all open Nox buffers
+- `:NoxyHighlight` - Force refresh syntax highlighting for current buffer
+- `:NoxyRefresh` - Refresh highlighting for all open Noxy buffers
 
 ### Manual Setup (Optional)
 
 If you want to customize the setup:
 
 ```lua
-require("nox").setup({
+require("noxy").setup({
   -- Currently no options, but reserved for future use
 })
 ```
@@ -80,17 +80,17 @@ Single-line comments: `// comment`
 ## File Structure
 
 ```
-nox.nvim/
+noxy.nvim/
 ├── lua/
-│   └── nox/
+│   └── noxy/
 │       ├── init.lua       # Main plugin logic
 │       └── highlights.lua # Color definitions
 ├── plugin/
-│   └── nox.lua           # Auto-loading
+│   └── noxy.lua           # Auto-loading
 ├── ftdetect/
-│   └── nox.lua           # File type detection
+│   └── noxy.lua           # File type detection
 ├── ftplugin/
-│   └── nox.lua           # File type settings
+│   └── noxy.lua           # File type settings
 └── README.md
 ```
 
